@@ -1,1 +1,85 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map Designer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #1a1a1a;
+      color: white;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 20px;
+    }
+    #map {
+      display: grid;
+      grid-template-columns: repeat(20, 32px);
+      grid-template-rows: repeat(20, 32px);
+      margin: 20px auto;
+      width: fit-content;
+    }
+    .cell {
+      width: 32px;
+      height: 32px;
+      border: 1px solid #333;
+      background-color: #2e2e2e;
+      cursor: pointer;
+    }
+    .terrain-picker {
+      margin: 20px auto;
+    }
+    .terrain-button {
+      margin: 0 5px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .mountain { background-color: #555; }
+    .river { background-color: #1e90ff; }
+    .forest { background-color: #228b22; }
+    .castle { background-color: #c0c0c0; }
+    .plain { background-color: #8b5; }
+  </style>
+</head>
+<body>
+  <h1>Map Designer</h1>
+  <div class="terrain-picker">
+    <button class="terrain-button mountain" data-type="mountain">Mountain</button>
+    <button class="terrain-button river" data-type="river">River</button>
+    <button class="terrain-button forest" data-type="forest">Forest</button>
+    <button class="terrain-button castle" data-type="castle">Castle</button>
+    <button class="terrain-button plain" data-type="plain">Plain</button>
+  </div>
+  <div id="map"></div>
+
+  <script>
+    const map = document.getElementById("map");
+    const terrainButtons = document.querySelectorAll(".terrain-button");
+    let currentTerrain = "plain";
+
+    // Handle terrain selection
+    terrainButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        currentTerrain = button.getAttribute("data-type");
+      });
+    });
+
+    // Build map grid
+    for (let i = 0; i < 20 * 20; i++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.addEventListener("click", () => {
+        cell.className = "cell " + currentTerrain;
+      });
+      map.appendChild(cell);
+    }
+  </script>
+</body>
+</html>
